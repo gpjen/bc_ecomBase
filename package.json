@@ -1,0 +1,33 @@
+{
+  "name": "bc_ecombase",
+  "version": "1.0.0",
+  "description": "create backand ecombase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gpjen95/bc_ecomBase.git"
+  },
+  "keywords": [
+    "ecomerse"
+  ],
+  "author": "gandi purna jen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gpjen95/bc_ecomBase/issues"
+  },
+  "homepage": "https://github.com/gpjen95/bc_ecomBase#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.16.2",
+    "sequelize-cli": "^6.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
