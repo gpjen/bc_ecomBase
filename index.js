@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
     res.send("oke bokkkssss")
 })
 
-app.use(() => {
+app.use((req, res) => {
     console.log(`${req.path} tidak ditemukan`);
 })
 

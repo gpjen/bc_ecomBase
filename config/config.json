@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "ecombase",
+    "database": "ecobase",
     "host": "localhost",
     "dialect": "mysql"
   },
@@ -19,5 +19,8 @@
     "database": "database_production",
     "host": "127.0.0.1",
     "dialect": "mysql"
+  },
+  "define": {
+    "freezeTableName": true
   }
 }
