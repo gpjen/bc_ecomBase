@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   profile.init({
     phone: DataTypes.STRING,
-    gender: DataTypes.ENUM,
+    gender: DataTypes.ENUM('Pria', 'Wanita'),
     addres: DataTypes.TEXT,
     idUser: DataTypes.INTEGER
   }, {
