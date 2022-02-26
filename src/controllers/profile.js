@@ -1,21 +1,21 @@
 const {
     profile,
-    user
+    users
 } = require('../../models')
 
 
 exports.getProfile = async (req, res) => {
     try {
-        const data = profile.findAll({
+        const data = await profile.findAll({
             include: {
-                as: user,
-                model: user,
-                atributes: {
-                    exclude: ['password', 'createdAt', 'updatedAt']
+                model: users,
+                as: "users",
+                attributes: {
+                    exclude: ['id', 'password', 'createdAt', 'updatedAt']
                 }
             },
-            atributes: {
-                exclude: ['createdAt', 'updateAt']
+            attributes: {
+                exclude: ['idUser', 'createdAt', 'updatedAt']
             }
         })
 
@@ -25,7 +25,7 @@ exports.getProfile = async (req, res) => {
         })
     } catch (error) {
         res.status(400).json({
-            status: 'failed',
+            status: 'failed getProducts',
             error
         })
     }
