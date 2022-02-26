@@ -63,3 +63,21 @@ exports.getOneProfile = async (req, res) => {
         })
     }
 }
+
+exports.addProfile = async (req, res) => {
+    try {
+        const data = req.body
+        const addProfile = profile.create(data)
+
+        res.status(200).json({
+            status: 'add profile success',
+            addProfile
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed add data',
+            error
+        })
+    }
+
+}
