@@ -50,13 +50,21 @@ exports.getOneUser = async (req, res) => {
             where: {
                 id
             },
-            include: {
-                model: profile,
-                as: "profile",
-                attributes: {
-                    exclude: ['id', 'createdAt', 'updatedAt']
+            include: [{
+                    model: profile,
+                    as: "profile",
+                    attributes: {
+                        exclude: ['idUser', 'id', 'createdAt', 'updatedAt']
+                    }
+                },
+                {
+                    model: products,
+                    as: "products",
+                    attributes: {
+                        exclude: ['idUser', 'id', 'createdAt', 'updatedAt']
+                    }
                 }
-            },
+            ],
             attributes: {
                 exclude: ['password', 'createdAt', 'updatedAt']
             }
