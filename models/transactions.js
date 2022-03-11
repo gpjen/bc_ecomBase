@@ -21,13 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         }
       })
 
-      transactions.belongsToMany(models.products, {
-        as: "products",
-        through: {
-          model: "categoryproduct",
-          as: "bridge"
-        },
-        foreignKey: "idProduct"
+      transactions.belongsTo(models.products, {
+        as: "product",
+        foreignKey: {
+          name: "idProduct"
+        }
       })
 
     }

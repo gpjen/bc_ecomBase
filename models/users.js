@@ -26,11 +26,19 @@ module.exports = (sequelize, DataTypes) => {
       })
 
       users.hasMany(models.transactions, {
-        as: 'transactions',
+        as: 'transactionsBuyer',
         foreignKey: {
-          name: 'idUser'
+          name: 'idBuyer'
         }
       })
+
+      users.hasMany(models.transactions, {
+        as: 'transactionsSeller',
+        foreignKey: {
+          name: 'idSeller'
+        }
+      })
+
     }
   }
   users.init({
