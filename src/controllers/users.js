@@ -1,8 +1,7 @@
 const {
     users,
     profile,
-    products,
-    transactions
+    products
 } = require('../../models')
 
 
@@ -23,13 +22,6 @@ exports.getUsers = async (req, res) => {
                         exclude: ['id', 'createdAt', 'updatedAt']
                     }
                 },
-                {
-                    model: transactions,
-                    as: "transaction",
-                    attributes: {
-                        exclude: ['id', 'createdAt', 'updatedAt']
-                    }
-                }
             ],
             attributes: {
                 exclude: ['password', 'createdAt', 'updatedAt']
@@ -87,4 +79,29 @@ exports.getOneUser = async (req, res) => {
             error
         })
     }
+}
+
+exports.addUsers = async (req, res) => {
+    const data = req.body
+
+    const cekData = await users.findAll({
+        where: {
+            email: req.body.email
+        }
+    })
+
+    if (!cekData) {
+        const addData = await users.create(data)
+        res.status(200).json({
+            status: "success",
+            message: "add users",
+            result: addData
+        })
+    } else {
+        res.status(200).json({
+            status: "failed",
+            message: "email conflict"
+        })
+    }
+
 }
