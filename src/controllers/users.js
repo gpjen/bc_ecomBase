@@ -84,24 +84,81 @@ exports.getOneUser = async (req, res) => {
 exports.addUsers = async (req, res) => {
     const data = req.body
 
-    const cekData = await users.findAll({
-        where: {
-            email: req.body.email
-        }
-    })
-
-    if (!cekData) {
-        const addData = await users.create(data)
-        res.status(200).json({
-            status: "success",
-            message: "add users",
-            result: addData
+    try {
+        const cekData = await users.findAll({
+            where: {
+                email: req.body.email
+            }
         })
-    } else {
-        res.status(200).json({
+
+        if (!cekData) {
+            const addData = await users.create(data)
+            res.status(200).json({
+                status: "success",
+                message: "add users",
+                result: addData
+            })
+        } else {
+            res.status(200).json({
+                status: "failed",
+                message: "email conflict"
+            })
+        }
+    } catch (error) {
+        res.status(400).json({
             status: "failed",
-            message: "email conflict"
+            error
         })
     }
 
+}
+
+exports.updateUsers = async (req, res) => {
+    const {
+        id
+    } = req.params
+    const data = req.body
+
+    try {
+        const updateData = await users.update(data, {
+            where: {
+                id
+            }
+        })
+
+        res.status(200).json({
+            ststus: "success",
+            result: updateData
+        })
+    } catch (error) {
+        res.status(400).json({
+            ststus: 'failed',
+            error
+        })
+    }
+
+
+}
+
+exports.delUsers = async (req, res) => {
+    const {
+        id
+    } = req.params
+    try {
+        const delData = await users.destroy({
+            where: {
+                id
+            }
+        })
+
+        res.status(200).json({
+            status: "success",
+            result: delData
+        })
+    } catch (error) {
+        res.status(400).json({
+            ststus: 'failed',
+            error
+        })
+    }
 }
