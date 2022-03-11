@@ -1,7 +1,8 @@
 const {
     users,
     profile,
-    products
+    products,
+    transactions
 } = require('../../models')
 
 
@@ -18,6 +19,13 @@ exports.getUsers = async (req, res) => {
                 {
                     model: products,
                     as: "products",
+                    attributes: {
+                        exclude: ['id', 'createdAt', 'updatedAt']
+                    }
+                },
+                {
+                    model: transactions,
+                    as: "transaction",
                     attributes: {
                         exclude: ['id', 'createdAt', 'updatedAt']
                     }
