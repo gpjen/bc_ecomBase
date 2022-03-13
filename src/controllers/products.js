@@ -4,6 +4,25 @@ const {
     transactions
 } = require('../../models')
 
+//-- ADD PRODUCT (CREATE)
+exports.addProducts = async (req, res) => {
+    const data = req.body
+
+    try {
+        const addData = products.create(data)
+        res.status(201).json({
+            status: 'success',
+            data: addData
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            error
+        })
+    }
+}
+
+// GET PRODUCT (READ)
 exports.getProducts = async (req, res) => {
     try {
         const data = await products.findAll({
@@ -37,6 +56,7 @@ exports.getProducts = async (req, res) => {
     }
 }
 
+//-- GET PRODUCT BY ID (READ)
 exports.getOneProducts = async (req, res) => {
     const {
         id
@@ -68,6 +88,53 @@ exports.getOneProducts = async (req, res) => {
         res.status(200).json({
             status: 'success',
             data
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            error
+        })
+    }
+}
+
+//-- UPDATE PRODUCT BY ID (UPDATE)
+exports.updateProducts = async (req, res) => {
+    const {
+        id
+    } = req.params
+    const data = req.body
+
+    try {
+        const updateData = products.update(data, {
+            where: {
+                id
+            }
+        })
+
+        res.staus(201).json({
+            status: 'success',
+            data: updateData
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            error
+        })
+    }
+}
+
+//-- HARD DELETE PRODUCT -single -multiple BY ID (DELETE)
+exports.delProducts = async (req, res) => {
+    try {
+        const delData = products.destroy({
+            where: {
+                id
+            },
+        })
+
+        res.status(201).json({
+            status: 'success',
+            data: delData
         })
     } catch (error) {
         res.status(400).json({

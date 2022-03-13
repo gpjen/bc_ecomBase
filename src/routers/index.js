@@ -18,15 +18,20 @@ router.post('/users', addUsers)
 router.patch('/users/:id', updateUsers)
 router.delete('/users/:id', delUsers)
 
-
-//products=----------------------------------------------
+//products-----------------------------------------------
 const {
     getProducts,
-    getOneProducts
+    getOneProducts,
+    addProducts,
+    updateProducts,
+    delProducts
 } = require('../controllers/products')
 
 router.get('/product', getProducts)
 router.get('/product/:id', getOneProducts)
+router.post('/product', addProducts)
+router.patch('/product/:id', updateProducts)
+router.delete('/product', delProducts)
 
 
 
