@@ -1,7 +1,8 @@
 const {
     users,
     profile,
-    products
+    products,
+    transactions
 } = require('../../models')
 
 
@@ -22,6 +23,13 @@ exports.getUsers = async (req, res) => {
                         exclude: ['id', 'createdAt', 'updatedAt']
                     }
                 },
+                // {
+                //     model: transactions,
+                //     as: 'transaction',
+                //     attributes: {
+                //         exclude: ['createdAt', 'updatedAt']
+                //     }
+                // }
             ],
             attributes: {
                 exclude: ['password', 'createdAt', 'updatedAt']
