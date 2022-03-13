@@ -18,7 +18,10 @@ app.get('/', (req, res) => {
 })
 
 app.use((req, res) => {
-    console.log(`${req.path} tidak ditemukan`);
+    res.status(400).json({
+        status: 'failed',
+        message: `${req.path} tidak ditemukan`
+    })
 })
 
 app.listen(port, async () => {

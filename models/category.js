@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       category.belongsToMany(models.products, {
-        as: 'product',
+        as: 'products',
         through: {
           model: 'categoryproduct',
           as: 'bridge'

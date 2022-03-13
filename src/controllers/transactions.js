@@ -8,12 +8,12 @@ const {
 exports.addTransactions = async (req, res) => {
     try {
         const data = req.body
-        const data = await transactions.create(data)
+        const addData = await transactions.create(data)
 
         res.status(200).json({
             status: 'success',
             message: 'create transactions',
-            data
+            data: addData
         })
     } catch (error) {
         res.status(400).json({

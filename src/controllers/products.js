@@ -1,7 +1,9 @@
 const {
     products,
     users,
-    transactions
+    transactions,
+    category,
+    categoryproduct
 } = require('../../models')
 
 //-- ADD PRODUCT (CREATE)
@@ -27,18 +29,28 @@ exports.getProducts = async (req, res) => {
     try {
         const data = await products.findAll({
             include: [{
-                model: users,
-                as: "user",
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                }
-            }, {
-                model: transactions,
-                as: 'transaction',
-                attributes: {
-                    exclude: ['createdAt', 'updatedAt']
-                }
-            }],
+                    model: users,
+                    as: "user",
+                    attributes: {
+                        exclude: ['password', 'createdAt', 'updatedAt']
+                    }
+                },
+                {
+                    model: transactions,
+                    as: 'transaction',
+                    attributes: {
+                        exclude: ['password', 'createdAt', 'updatedAt']
+                    }
+                },
+                // {
+                //     model: category,
+                //     as: "category",
+                //     through: {
+                //         model: categoryproduct,
+                //         as: 'bridge'
+                //     }
+                // }
+            ],
             attributes: {
                 exclude: ['createdAt', 'updatedAt']
             }
@@ -51,6 +63,7 @@ exports.getProducts = async (req, res) => {
     } catch (error) {
         res.status(400).json({
             status: 'failed',
+            message: 'failed get products',
             error
         })
     }
