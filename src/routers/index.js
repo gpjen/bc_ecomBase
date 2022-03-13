@@ -35,10 +35,12 @@ router.delete('/product', delProducts)
 
 const {
     getTransactions,
-    getOneTransactions
+    getOneTransactions,
+    addTransactions
 } = require('../controllers/transactions')
 
 router.get('/transaction', getTransactions)
 router.get('/transaction/:id', getOneTransactions)
+router.post('/transaction', addTransactions)
 
 module.exports = router

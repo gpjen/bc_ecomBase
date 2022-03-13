@@ -5,7 +5,24 @@ const {
 } = require('../../models')
 
 //-- ADD TRANSACTIONS (CREATE)
+exports.addTransactions = async (req, res) => {
+    try {
+        const data = req.body
+        const data = await transactions.create(data)
 
+        res.status(200).json({
+            status: 'success',
+            message: 'create transactions',
+            data
+        })
+    } catch (error) {
+        res.status(400).json({
+            status: 'failed',
+            message: 'error create transactions',
+            error
+        })
+    }
+}
 
 //-- GET TRANSACTIONS (READ)
 exports.getTransactions = async (req, res) => {
