@@ -34,9 +34,11 @@ router.patch('/product/:id', updateProducts)
 router.delete('/product', delProducts)
 
 const {
-    getTransactions
+    getTransactions,
+    getOneTransactions
 } = require('../controllers/transactions')
 
 router.get('/transaction', getTransactions)
+router.get('/transaction/:id', getOneTransactions)
 
 module.exports = router
