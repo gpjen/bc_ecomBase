@@ -33,6 +33,10 @@ router.post('/product', addProducts)
 router.patch('/product/:id', updateProducts)
 router.delete('/product', delProducts)
 
+const {
+    getTransactions
+} = require('../controllers/transactions')
 
+router.get('/transaction', getTransactions)
 
 module.exports = router
