@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 app.use((req, res) => {
     res.status(400).json({
         status: 'failed',
+        method: req.method,
         message: `${req.path} tidak ditemukan`
     })
 })

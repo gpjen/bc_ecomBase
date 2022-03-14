@@ -19,19 +19,19 @@ module.exports = {
         name: 'buyer tampan',
         email: 'buyer.tampan@gmail.com',
         password: 'buyertampan',
-        status: 'seller'
+        status: 'buyer'
       },
       {
         name: 'buyer cantik',
         email: 'buyer.cantik@gmail.com',
         password: 'buyercantik',
-        status: 'seller'
+        status: 'buyer'
       },
       {
         name: 'buyer cerewet',
         email: 'buyer.cerewet@gmail.com',
         password: 'buyer.cerewet',
-        status: 'seller'
+        status: 'buyer'
       }
     ], {});
   },

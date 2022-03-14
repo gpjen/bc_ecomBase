@@ -2,6 +2,15 @@ const express = require('express')
 const router = express.Router()
 
 
+//auth----------------------------------------------------
+const {
+    registerUser,
+    loginUser
+} = require('../controllers/auth')
+
+router.post('/register', registerUser)
+router.post('/login', loginUser)
+
 //users---------------------------------------------------
 const {
     getUsers,
