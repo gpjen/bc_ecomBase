@@ -1,7 +1,11 @@
 const {
     users
 } = require('../../models')
+const {
+    Op
+} = require('sequelize')
 const Joi = require("joi")
+
 
 exports.registerUser = async (req, res) => {
     try {
@@ -11,7 +15,8 @@ exports.registerUser = async (req, res) => {
         const schema = Joi.object({
             name: Joi.string().min(3).required(),
             email: Joi.string().email().required(),
-            password: Joi.string().min(6).required()
+            password: Joi.string().min(6).required(),
+            confirmPass: Joi.ref('password')
         })
         const {
             error
@@ -71,16 +76,29 @@ exports.loginUser = async (req, res) => {
 
         if (error) return res.status(400).json({
             status: 'failed',
-            message: error.details[0].message,
+            message: error.details[0].message
         })
 
         //-- CHECK EMAIL PASSWORD
+        const findUser = await users.findOne({
+            where: {
+                [Op.and]: {
+                    email: data.email,
+                    password: data.password
+                }
+            }
+        })
 
-
+        if (!findUser) return res.status(400).json({
+            status: 'failed',
+            message: 'email and password invalid'
+        })
 
         //-- RESPONS
-
-
+        res.status(200).json({
+            status: 'success',
+            data: findUser
+        })
 
     } catch (error) {
         res.status(500).json({
