@@ -1,36 +1,33 @@
 const {
     users
 } = require('../../models')
-const {
-    Op
-} = require('sequelize')
 const Joi = require("joi")
+const bcrypt = require('bcrypt')
 
 
 exports.registerUser = async (req, res) => {
-    try {
-        const data = req.body
+    //-- VALIDASI DATA INPUT
+    const data = req.body
+    const schema = Joi.object({
+        name: Joi.string().min(3).required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().min(6).required(),
+        confirmPass: Joi.ref('password')
+    })
+    const {
+        error
+    } = schema.validate(data)
 
-        //-- VALIDASI DATA INPUT
-        const schema = Joi.object({
-            name: Joi.string().min(3).required(),
-            email: Joi.string().email().required(),
-            password: Joi.string().min(6).required(),
-            confirmPass: Joi.ref('password')
+    if (error) {
+        return res.status(400).json({
+            status: 'failed',
+            message: error.details[0].message
         })
-        const {
-            error
-        } = schema.validate(data)
+    }
 
-        if (error) {
-            return res.status(400).json({
-                status: 'failed',
-                message: error.details[0].message
-            })
-        }
-
+    try {
         //-- CKECK EMAIL
-        const check = await users.findOne({
+        const newUser = await users.findOne({
             where: {
                 email: data.email
             },
@@ -39,10 +36,15 @@ exports.registerUser = async (req, res) => {
             }
         })
 
-        if (check) return res.status(200).json({
+        if (newUser) return res.status(200).json({
             status: 'failed',
             message: 'email already exist'
         })
+
+        //-- HASH PASSWORD
+        const salt = await bcrypt.genSalt(10)
+        const hassedPassword = await bcrypt.hash(data.password, salt)
+        data.password = hassedPassword
 
         //-- CREATE DATA USERS
         data.status = 'buyer'
@@ -61,43 +63,51 @@ exports.registerUser = async (req, res) => {
 }
 
 exports.loginUser = async (req, res) => {
+    const data = req.body
+
+    //-- VALIDASI DATA INPUT
+    const schema = Joi.object({
+        email: Joi.string().email().required(),
+        password: Joi.string().min(6).required()
+    })
+
+    const {
+        error
+    } = schema.validate(data)
+
+    if (error) return res.status(400).json({
+        status: 'failed',
+        message: error.details[0].message
+    })
+
     try {
-        const data = req.body
-
-        //-- VALIDASI DATA INPUT
-        const schema = Joi.object({
-            email: Joi.string().email().required(),
-            password: Joi.string().min(6).required()
-        })
-
-        const {
-            error
-        } = schema.validate(data)
-
-        if (error) return res.status(400).json({
-            status: 'failed',
-            message: error.details[0].message
-        })
-
         //-- CHECK EMAIL PASSWORD
         const findUser = await users.findOne({
             where: {
-                [Op.and]: {
-                    email: data.email,
-                    password: data.password
-                }
-            }
+                email: data.email
+            },
+            // attributes: ['name', 'email']
         })
 
         if (!findUser) return res.status(400).json({
             status: 'failed',
-            message: 'email and password invalid'
+            message: 'email and password doesnt match'
         })
 
-        //-- RESPONS
+        const validPass = await bcrypt.compare(data.password, findUser.password)
+
+        if (!validPass) return res.status(400).json({
+            status: 'failed',
+            message: 'email and password doesnt match'
+        })
+
+        //-- RESPONS SUCCESS
         res.status(200).json({
             status: 'success',
-            data: findUser
+            data: {
+                name: findUser.name,
+                email: findUser.email
+            }
         })
 
     } catch (error) {
