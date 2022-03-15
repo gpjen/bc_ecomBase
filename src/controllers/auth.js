@@ -1,8 +1,10 @@
 const {
     users
 } = require('../../models')
+require('dotenv').config()
 const Joi = require("joi")
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 
 exports.registerUser = async (req, res) => {
@@ -101,12 +103,20 @@ exports.loginUser = async (req, res) => {
             message: 'email and password doesnt match'
         })
 
+        //-- CREATE DATA TOKEN JWT
+        const datatToken = {
+            id: findUser.id,
+            email: findUser.email
+        }
+        const token = jwt.sign(datatToken, process.env.DT_SECRET_KEY)
+
         //-- RESPONS SUCCESS
         res.status(200).json({
             status: 'success',
             data: {
                 name: findUser.name,
-                email: findUser.email
+                email: findUser.email,
+                token
             }
         })
 
