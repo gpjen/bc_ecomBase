@@ -45,8 +45,7 @@ exports.registerUser = async (req, res) => {
 
         //-- HASH PASSWORD
         const salt = await bcrypt.genSalt(10)
-        const hassedPassword = await bcrypt.hash(data.password, salt)
-        data.password = hassedPassword
+        data.password = await bcrypt.hash(data.password, salt)
 
         //-- CREATE DATA USERS
         data.status = 'buyer'
@@ -106,7 +105,8 @@ exports.loginUser = async (req, res) => {
         //-- CREATE DATA TOKEN JWT
         const datatToken = {
             id: findUser.id,
-            email: findUser.email
+            email: findUser.email,
+            status: findUser.status
         }
         const token = jwt.sign(datatToken, process.env.DT_SECRET_KEY)
 

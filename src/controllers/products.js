@@ -11,7 +11,7 @@ exports.addProducts = async (req, res) => {
     const data = req.body
 
     try {
-        const addData = products.create(data)
+        const addData = await products.create(data)
         res.status(201).json({
             status: 'success',
             data: addData
@@ -58,7 +58,7 @@ exports.getProducts = async (req, res) => {
 
         res.status(200).json({
             status: 'success',
-            data
+            data,
         })
     } catch (error) {
         res.status(400).json({

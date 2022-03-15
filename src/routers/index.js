@@ -2,6 +2,10 @@ const express = require('express')
 const router = express.Router()
 
 
+const {
+    auth
+} = require('../midleware/auth')
+
 //auth----------------------------------------------------
 const {
     registerUser,
@@ -36,7 +40,7 @@ const {
     delProducts
 } = require('../controllers/products')
 
-router.get('/product', getProducts)
+router.get('/product', auth, getProducts)
 router.get('/product/:id', getOneProducts)
 router.post('/product', addProducts)
 router.patch('/product/:id', updateProducts)
