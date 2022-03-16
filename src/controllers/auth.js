@@ -27,6 +27,7 @@ exports.registerUser = async (req, res) => {
         })
     }
 
+
     try {
         //-- CKECK EMAIL
         const newUser = await users.findOne({
