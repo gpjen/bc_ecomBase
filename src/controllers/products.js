@@ -6,9 +6,33 @@ const {
     categoryproduct
 } = require('../../models')
 
+const Joi = require('joi')
+const {
+    number,
+    string
+} = require('joi')
+
 //-- ADD PRODUCT (CREATE)
 exports.addProducts = async (req, res) => {
+    //VALIDASI DATA REQUEST
     const data = req.body
+    const schema = Joi.object({
+        name: Joi.string().min(1).required(),
+        desc: Joi.string().allow(''),
+        price: Joi.number().min(0).required(),
+        image: Joi.string().allow(''),
+        qty: Joi.number().max(999999).required(),
+        idUser: Joi.number().required()
+    })
+
+    const {
+        error
+    } = schema.validate(data)
+
+    if (error) return res.status(400).json({
+        status: 'failed',
+        message: error.details[0].message
+    })
 
     try {
         const addData = await products.create(data)
