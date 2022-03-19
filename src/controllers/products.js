@@ -48,7 +48,7 @@ exports.addProducts = async (req, res) => {
     }
 }
 
-// GET PRODUCT (READ)
+//-- (READ) GET PRODUCT 
 exports.getProducts = async (req, res) => {
     try {
         const data = await products.findAll({
@@ -93,7 +93,7 @@ exports.getProducts = async (req, res) => {
     }
 }
 
-//-- GET PRODUCT BY ID (READ)
+//-- (READ) GET PRODUCT BY ID 
 exports.getOneProducts = async (req, res) => {
     const {
         id
@@ -134,7 +134,7 @@ exports.getOneProducts = async (req, res) => {
     }
 }
 
-//-- UPDATE PRODUCT BY ID (UPDATE)
+//-- (UPDATE) POST PRODUCT BY ID 
 exports.updateProducts = async (req, res) => {
     const {
         id
@@ -160,7 +160,7 @@ exports.updateProducts = async (req, res) => {
     }
 }
 
-//-- HARD DELETE PRODUCT -single -multiple BY ID (DELETE)
+//-- (DELETE) HARD DELETE PRODUCT -single -multiple BY ID 
 exports.delProducts = async (req, res) => {
     try {
         const delData = products.destroy({
