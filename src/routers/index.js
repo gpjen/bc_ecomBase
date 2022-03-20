@@ -46,6 +46,7 @@ router.post('/product', addProducts)
 router.patch('/product/:id', updateProducts)
 router.delete('/product', delProducts)
 
+//-- transactions
 const {
     getTransactions,
     getOneTransactions,
