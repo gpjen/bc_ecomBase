@@ -1,10 +1,15 @@
 const express = require('express')
 const router = express.Router()
 
-
+//-- authtentications
 const {
     auth
 } = require('../midleware/auth')
+
+//-- uploads file
+const {
+    uploadsImage
+} = require('../midleware/uploadsFile')
 
 //auth----------------------------------------------------
 const {
@@ -42,7 +47,7 @@ const {
 
 router.get('/product', auth, getProducts)
 router.get('/product/:id', getOneProducts)
-router.post('/product', addProducts)
+router.post('/product', auth, uploadsImage("photo"), addProducts)
 router.patch('/product/:id', updateProducts)
 router.delete('/product', delProducts)
 

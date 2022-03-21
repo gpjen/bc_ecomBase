@@ -7,7 +7,7 @@ exports.uploadsImage = (imageFile) => {
 
     const storage = multer.diskStorage({
         destination: function (req, file, cb) {
-            cb(null, "uploads")
+            cb(null, "uploads/productImg")
         },
         filename: function (req, file, cb) {
             cb(null, Date.now() + "-" + file.originalname.replace(/\s/g, ''))
@@ -15,12 +15,10 @@ exports.uploadsImage = (imageFile) => {
     })
 
     //-- filter type file by images
-    const filterFile = function (req, file, cb) {
+    const fileFilter = function (req, file, cb) {
         if (file.fieldname === imageFile) {
-            if (!file.originalname.macth(/\.(jpg|png|gif|JPG|JPEG|PNG|GIF)$/)) {
-                req.fileValidationError = {
-                    message: 'only images file formats allowed'
-                }
+            if (!file.originalname.match(/\.(jpg|png|gif|JPG|JPEG|PNG|GIF)$/)) {
+                req.fileVallidationError = 'only images file formats allowed'
                 return cb(new Error("only images file formats allowed"), false)
             }
         }
@@ -31,7 +29,7 @@ exports.uploadsImage = (imageFile) => {
 
     const upload = multer({
         storage,
-        filterFile,
+        fileFilter,
         limits: {
             fileSize: maxSize
         }
@@ -39,9 +37,9 @@ exports.uploadsImage = (imageFile) => {
 
     return (req, res, next) => {
         upload(req, res, function (err) {
-            if (req.fileValidationError)
+            if (req.fileVallidationError)
                 return res.status(400).json({
-                    message: fileValidationError
+                    message: req.fileVallidationError
                 })
             if (!req.file && !err)
                 return res.status(400).json({
@@ -54,7 +52,7 @@ exports.uploadsImage = (imageFile) => {
                         message: 'max file size 1 MB'
                     })
                 return res.status(400).json({
-                    err
+                    error: err
                 })
             }
 
