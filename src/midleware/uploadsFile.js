@@ -16,6 +16,8 @@ exports.uploadsImage = (imageFile) => {
 
     //-- filter type file by images
     const fileFilter = function (req, file, cb) {
+
+        console.log(`${file.fieldname} === ${imageFile} `);
         if (file.fieldname === imageFile) {
             if (!file.originalname.match(/\.(jpg|png|gif|JPG|JPEG|PNG|GIF)$/)) {
                 req.fileVallidationError = 'only images file formats allowed'

@@ -47,7 +47,7 @@ const {
 
 router.get('/product', auth, getProducts)
 router.get('/product/:id', getOneProducts)
-router.post('/product', auth, uploadsImage("photo"), addProducts)
+router.post('/product', auth, uploadsImage("imagex"), addProducts)
 router.patch('/product/:id', updateProducts)
 router.delete('/product', delProducts)
 
